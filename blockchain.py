@@ -3,6 +3,8 @@ import datetime
 import os
 import pickle
 import hashlib as hasher
+import eos_image_right
+import ipfs
 from ipfs import *
 from sift import *
 
@@ -109,6 +111,10 @@ class Blockchain:
         block = Block(block_idx, self.unconfirmed_transactions, previous_hash)
         if self.verify_block(block):
             self.add_block(block)
+            try:
+                eos_image_right.add_image(block.transaction['filename'], block.transaction['kps_cid'], block.transaction['npy_cid'], block.transaction['author'], time.time())
+            except Exception as e:
+                print(f"EOS on chain failed: {e}")
             return block
         else:
             return None
@@ -132,6 +138,7 @@ class Blockchain:
             if Blockchain.verify(curr_kps, curr_npy, prev_block) is False:
                 delete_tmp(curr_kps)
                 delete_tmp(curr_npy)
+                ipfs.remove_file(block.transaction['img_cid'])
                 return False
         return True
 

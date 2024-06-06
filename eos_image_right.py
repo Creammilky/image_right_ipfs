@@ -8,7 +8,7 @@ import webbrowser
 
 consumer_private_key = eospy.keys.EOSKey("5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3")
 
-ce = eospy.cleos.Cleos(url="http://192.168.65.172:8888", version='v1')
+ce = eospy.cleos.Cleos(url="http://10.122.245.215:8888", version='v1')
 
 
 def add_image(imagehash, keypoints, descriptors, author, time):
