@@ -3,11 +3,16 @@ import os
 from os import path
 
 import pickle
-
+import configparser
 import cv2
 import numpy as np
-UPLOAD_FOLDER = 'uploads'
-TMP_FOLDER = 'tmp'
+
+config = configparser.ConfigParser()
+config.read('CONFIG.ini')
+
+UPLOAD_FOLDER = config.get('Folders', 'UPLOAD_FOLDER')
+TMP_FOLDER = config.get('Folders', 'TMP_FOLDER')
+
 def delete_tmp(_path):
     if os.path.isfile(_path):
         os.remove(_path)

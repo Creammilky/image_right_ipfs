@@ -3,8 +3,11 @@ from flask import Flask, request, render_template, jsonify, redirect, send_from_
 from blockchain import *
 import os
 
-UPLOAD_FOLDER = 'uploads'
-TMP_FOLDER = 'tmp'
+config = configparser.ConfigParser()
+config.read('CONFIG.ini')
+
+UPLOAD_FOLDER = config.get('Folders', 'UPLOAD_FOLDER')
+TMP_FOLDER = config.get('Folders', 'TMP_FOLDER')
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER

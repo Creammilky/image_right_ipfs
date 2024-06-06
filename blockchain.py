@@ -1,16 +1,18 @@
 from time import time
-import datetime
-import os
-import pickle
+import configparser
 import hashlib as hasher
 import eos_image_right
 import ipfs
 from ipfs import *
 from sift import *
 
-UPLOAD_FOLDER = 'uploads'
-TMP_FOLDER = 'tmp'
-THRESHOLD = 0.88
+config = configparser.ConfigParser()
+config.read('CONFIG.ini')
+
+UPLOAD_FOLDER = config.get('Folders', 'UPLOAD_FOLDER')
+TMP_FOLDER = config.get('Folders', 'TMP_FOLDER')
+THRESHOLD = config.get('Threshold', 'THRESHOLD')
+
 """ Class for transactions made on the blockchain. Each transaction has a
     sender, recipient, and value.
     """
@@ -102,7 +104,7 @@ class Blockchain:
 
     def mine(self):
         # create a block, verify its originality and add to the blockchain
-        if (len(self.chain) == 0):
+        if len(self.chain) == 0:
             block_idx = 1
             previous_hash = 0
         else:

@@ -4,11 +4,13 @@ import datetime
 import eospy.cleos
 import eospy.keys
 import pytz
-import webbrowser
+import configparser
 
-consumer_private_key = eospy.keys.EOSKey("5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3")
+config = configparser.ConfigParser()
+config.read('CONFIG.ini')
+consumer_private_key = eospy.keys.EOSKey(config.read("EOS", "key"))
 
-ce = eospy.cleos.Cleos(url="http://10.122.245.215:8888", version='v1')
+ce = eospy.cleos.Cleos(url=config.read("EOS", "path"), version='v1')
 
 
 def add_image(imagehash, keypoints, descriptors, author, time):
