@@ -8,9 +8,9 @@ import configparser
 
 config = configparser.ConfigParser()
 config.read('CONFIG.ini')
-consumer_private_key = eospy.keys.EOSKey(config.read("EOS", "key"))
+consumer_private_key = eospy.keys.EOSKey(config.get("EOS", "key"))
 
-ce = eospy.cleos.Cleos(url=config.read("EOS", "path"), version='v1')
+ce = eospy.cleos.Cleos(url=config.get("EOS", "host"), version='v1')
 
 
 def add_image(imagehash, keypoints, descriptors, author, time):
@@ -38,7 +38,7 @@ def add_image(imagehash, keypoints, descriptors, author, time):
         "actions": [action],
         "expiration": str((datetime.datetime.utcnow() + datetime.timedelta(seconds=3000)).replace(tzinfo=pytz.UTC))
     }
-    resp = ce.push_transaction(tx, consumer_private_key, timeout=3000)
+    resp = ce.push_transaction(tx, consumer_private_key, timeout=10000)
     print(resp)
 
 

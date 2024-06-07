@@ -155,7 +155,7 @@ class Blockchain:
         sim = calculate_similarity_file(key1, des1, key2, des2)
         delete_tmp(cmp_kps)
         delete_tmp(cmp_npy)
-        if sim < THRESHOLD:
+        if sim < float(THRESHOLD):
             print(sim)
             print("Sim check PASS")
             return True
